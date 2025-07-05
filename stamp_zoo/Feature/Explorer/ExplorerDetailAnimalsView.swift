@@ -73,16 +73,14 @@ struct ExplorerDetailAnimalsView: View {
     }
     
     private func animalCardView(animal: Animal, index: Int, geometry: GeometryProxy) -> some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            AnimalDetailCard(
-                animalName: animal.name,
-                animalSubName: getAnimalSubName(animal.name),
-                animalImage: animal.image,
-                description: getShortDescription(for: animal.name)
-            )
-            .padding(.top, 20)
-        }
-        .frame(width: geometry.size.width - 60)
+        AnimalDetailCard(
+            animalName: animal.name,
+            animalSubName: getAnimalSubName(animal.name),
+            animalImage: animal.image,
+            description: getShortDescription(for: animal.name)
+        )
+        .frame(width: geometry.size.width - 60, height: geometry.size.height - geometry.safeAreaInsets.bottom + 40) // 탭바 바로 위까지
+        .padding(.top, 30) // 위쪽 패딩 추가
         .padding(.leading, index == 0 ? 20 : 0)
         .padding(.trailing, index == animals.count - 1 ? 20 : 0)
         .id(index)
@@ -116,7 +114,7 @@ struct ExplorerDetailAnimalsView: View {
     private func getShortDescription(for animalName: String) -> String {
         switch animalName {
         case "늑대":
-            return "늑대는 개과에 속하는 육식 포유동물로, 현재 개의 조상으로 여겨집니다. 뛰어난 사회성을 가진 동물로, 무리(팩)를 이루어 생활합니다. 사냥할 때는 뛰어난 팀워크를 발휘하며, 생태계에서 최상위 포식자로서 중요한 역할을 합니다."
+            return "늑대는 개과에 속하는 육식 포유동물로, 현재 개의 조상으로 여겨집니다. 뛰어난 사회성을 가진 동물로, 무리(팩)를 이루어 생활합니다. 사냥할 때는 뛰어난 팀워크를 발휘하며, 생태계에서 최상위 포식자로서 중요한 역할을 합니다.늑대는 개과에 속하는 육식 포유동물로, 현재 개의 조상으로 여겨집니다. 뛰어난 사회성을 가진 동물로, 무리(팩)를 이루어 생활합니다. 사냥할 때는 뛰어난 팀워크를 발휘하며, 생태계에서 최상위 포식자로서 중요한 역할을 합니다.늑대는 개과에 속하는 육식 포유동물로, 현재 개의 조상으로 여겨집니다. 뛰어난 사회성을 가진 동물로, 무리(팩)를 이루어 생활합니다. 사냥할 때는 뛰어난 팀워크를 발휘하며, 생태계에서 최상위 포식자로서 중요한 역할을 합니다.늑대는 개과에 속하는 육식 포유동물로, 현재 개의 조상으로 여겨집니다. 뛰어난 사회성을 가진 동물로, 무리(팩)를 이루어 생활합니다. 사냥할 때는 뛰어난 팀워크를 발휘하며, 생태계에서 최상위 포식자로서 중요한 역할을 합니다."
         case "얼룩말":
             return "얼룩말은 아프리카 대륙에 서식하는 말과 동물로, 검은색과 흰색의 독특한 줄무늬 패턴으로 유명합니다. 줄무늬는 해충을 쫓고 포식자로부터 보호하는 역할을 합니다."
         case "하마":
@@ -140,11 +138,18 @@ struct AnimalDetailCard: View {
     let description: String
     
     var body: some View {
-        VStack(spacing: 0) {
-            animalImageView
-            animalInfoView
+        ZStack {
+            Color.green.opacity(0.3) // 배경색
+            
+            ScrollView(.vertical, showsIndicators: true) {
+                VStack(spacing: 0) {
+                    animalImageView
+                    animalInfoView
+                }
+                .padding(.top, 20)
+                .padding(.bottom, 20)
+            }
         }
-        .background(Color.green.opacity(0.3))
         .cornerRadius(20)
     }
     
