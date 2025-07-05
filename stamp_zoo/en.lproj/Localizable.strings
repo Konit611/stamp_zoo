@@ -44,4 +44,36 @@
 "stamp_collected" = "Stamp Collected";
 "total_stamps" = "Total Stamps";
 "collected_stamps" = "Collected Stamps";
-"remaining_stamps" = "Remaining Stamps"; 
+"remaining_stamps" = "Remaining Stamps";
+
+// Stamp Rally Related
+"stamp_rally_title" = "Exciting\nStamp Rally";
+"get_stamp_with_qr" = "Get Stamp with QR";
+"home" = "Home";
+"zoo" = "Zoo";
+"list" = "List";
+
+// Navigation Related
+"back" = "Back";
+"close" = "Close";
+
+// Bingo Detail Related
+"bingo_detail" = "Bingo Detail";
+"bingo_progress" = "Bingo Progress";
+"collect_stamps_complete_bingo" = "Collect stamps to complete bingo!";
+"bingo_card" = "Bingo Card";
+"collection_stats" = "Collection Stats";
+"completion_rate" = "Completion Rate";
+
+// QR Scan Related
+"qr_scan" = "QR Scan";
+"qr_scan_title" = "Scan QR Code";
+"qr_scan_subtitle" = "Scan QR codes near zoo exhibits to collect stamps";
+"camera_placeholder" = "Camera View";
+"start_scanning" = "Start Scanning";
+"stop_scanning" = "Stop Scanning";
+"qr_instructions" = "How to Use";
+"qr_instruction_1" = "Find QR codes near the exhibits";
+"qr_instruction_2" = "Align QR code with camera and scan";
+"qr_instruction_3" = "Collect stamps and complete bingo";
+"qr_scan_success" = "QR code scan completed! Stamp has been added."; 

@@ -29,12 +29,6 @@ struct MainTabView: View {
                     Image(systemName: "book.fill")
                     Text("field_guide".localized)
                 }
-            
-            SettingsView()
-                .tabItem {
-                    Image(systemName: "gearshape.fill")
-                    Text("settings".localized)
-                }
         }
         .accentColor(.blue)
     }

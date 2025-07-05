@@ -44,4 +44,36 @@
 "stamp_collected" = "スタンプ収集";
 "total_stamps" = "総スタンプ";
 "collected_stamps" = "収集したスタンプ";
-"remaining_stamps" = "残りのスタンプ"; 
+"remaining_stamps" = "残りのスタンプ";
+
+// スタンプラリー関連
+"stamp_rally_title" = "ワクワク\nスタンプラリー";
+"get_stamp_with_qr" = "QRでスタンプを取得";
+"home" = "ホーム";
+"zoo" = "動物園";
+"list" = "一覧";
+
+// ナビゲーション関連
+"back" = "戻る";
+"close" = "閉じる";
+
+// ビンゴ詳細関連
+"bingo_detail" = "ビンゴ詳細";
+"bingo_progress" = "ビンゴ進行状況";
+"collect_stamps_complete_bingo" = "スタンプを集めてビンゴを完成させよう！";
+"bingo_card" = "ビンゴカード";
+"collection_stats" = "収集統計";
+"completion_rate" = "完成率";
+
+// QRスキャン関連
+"qr_scan" = "QRスキャン";
+"qr_scan_title" = "QRコードをスキャンしてください";
+"qr_scan_subtitle" = "動物園の展示物近くのQRコードをスキャンしてスタンプを集めよう";
+"camera_placeholder" = "カメラビュー";
+"start_scanning" = "スキャン開始";
+"stop_scanning" = "スキャン停止";
+"qr_instructions" = "使い方";
+"qr_instruction_1" = "展示物近くのQRコードを見つけてください";
+"qr_instruction_2" = "QRコードをカメラに合わせてスキャンしてください";
+"qr_instruction_3" = "スタンプを集めてビンゴを完成させましょう";
+"qr_scan_success" = "QRコードスキャン完了！スタンプが追加されました。"; 

@@ -44,4 +44,36 @@
 "stamp_collected" = "스탬프 수집됨";
 "total_stamps" = "총 스탬프";
 "collected_stamps" = "수집한 스탬프";
-"remaining_stamps" = "남은 스탬프"; 
+"remaining_stamps" = "남은 스탬프";
+
+// 스탬프 랠리 관련
+"stamp_rally_title" = "와쿠와쿠\n스탬프 랠리";
+"get_stamp_with_qr" = "QR로 스탬프 취득";
+"home" = "홈";
+"zoo" = "동물원";
+"list" = "일람";
+
+// 네비게이션 관련
+"back" = "뒤로";
+"close" = "닫기";
+
+// 빙고 상세 관련
+"bingo_detail" = "빙고 상세";
+"bingo_progress" = "빙고 진행 상황";
+"collect_stamps_complete_bingo" = "스탬프를 모아서 빙고를 완성하세요!";
+"bingo_card" = "빙고 카드";
+"collection_stats" = "수집 통계";
+"completion_rate" = "완성률";
+
+// QR 스캔 관련
+"qr_scan" = "QR 스캔";
+"qr_scan_title" = "QR 코드를 스캔하세요";
+"qr_scan_subtitle" = "동물원 전시물 근처의 QR 코드를 스캔하여 스탬프를 수집하세요";
+"camera_placeholder" = "카메라 뷰";
+"start_scanning" = "스캔 시작";
+"stop_scanning" = "스캔 중지";
+"qr_instructions" = "사용 방법";
+"qr_instruction_1" = "전시물 근처의 QR 코드를 찾으세요";
+"qr_instruction_2" = "QR 코드를 카메라에 맞춰 스캔하세요";
+"qr_instruction_3" = "스탬프를 수집하고 빙고를 완성하세요";
+"qr_scan_success" = "QR 코드 스캔 완료! 스탬프가 추가되었습니다."; 
