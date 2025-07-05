@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C6DB0A802E18979D0018CF9A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = C6DB0A7F2E18979D0018CF9A /* .gitignore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		C6DB0A632E1897880018CF9A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		C6DB0A4F2E1897860018CF9A /* stamp_zoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stamp_zoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6DB0A622E1897880018CF9A /* stamp_zooTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = stamp_zooTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6DB0A6C2E1897880018CF9A /* stamp_zooUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = stamp_zooUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6DB0A7F2E18979D0018CF9A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +80,7 @@
 		C6DB0A462E1897860018CF9A = {
 			isa = PBXGroup;
 			children = (
+				C6DB0A7F2E18979D0018CF9A /* .gitignore */,
 				C6DB0A512E1897860018CF9A /* stamp_zoo */,
 				C6DB0A652E1897880018CF9A /* stamp_zooTests */,
 				C6DB0A6F2E1897880018CF9A /* stamp_zooUITests */,
@@ -192,6 +198,8 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
+				ja,
 			);
 			mainGroup = C6DB0A462E1897860018CF9A;
 			minimizedProjectReferenceProxies = 1;
@@ -212,6 +220,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6DB0A802E18979D0018CF9A /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

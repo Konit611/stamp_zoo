@@ -1,0 +1,47 @@
+/* 
+  Localizable.strings
+  stamp_zoo
+  
+  Korean localization
+*/
+
+// 공통
+"done" = "완료";
+"cancel" = "취소";
+"save" = "저장";
+"edit" = "편집";
+"delete" = "삭제";
+"add" = "추가";
+"search" = "검색";
+"settings" = "설정";
+
+// 언어 설정
+"language_settings" = "언어 설정";
+"language_selection" = "언어 선택";
+
+// 앱 정보
+"about_app" = "앱 정보";
+
+// 탭 메뉴
+"explorer" = "탐험";
+"field_guide" = "도감";
+"bingo_home" = "빙고";
+
+// 메시지
+"welcome_message" = "스탬프 동물원에 오신 것을 환영합니다!";
+"no_data_available" = "데이터가 없습니다";
+"loading" = "로딩 중...";
+"error_occurred" = "오류가 발생했습니다";
+
+// 동물 관련
+"animal_name" = "동물 이름";
+"animal_description" = "동물 설명";
+"habitat" = "서식지";
+"diet" = "식단";
+"characteristics" = "특징";
+
+// 스탬프 관련
+"stamp_collected" = "스탬프 수집됨";
+"total_stamps" = "총 스탬프";
+"collected_stamps" = "수집한 스탬프";
+"remaining_stamps" = "남은 스탬프"; 

@@ -1,0 +1,47 @@
+/* 
+  Localizable.strings
+  stamp_zoo
+  
+  English localization
+*/
+
+// Common
+"done" = "Done";
+"cancel" = "Cancel";
+"save" = "Save";
+"edit" = "Edit";
+"delete" = "Delete";
+"add" = "Add";
+"search" = "Search";
+"settings" = "Settings";
+
+// Language Settings
+"language_settings" = "Language Settings";
+"language_selection" = "Language Selection";
+
+// App Info
+"about_app" = "About App";
+
+// Tab Menu
+"explorer" = "Explorer";
+"field_guide" = "Field Guide";
+"bingo_home" = "Bingo";
+
+// Messages
+"welcome_message" = "Welcome to Stamp Zoo!";
+"no_data_available" = "No data available";
+"loading" = "Loading...";
+"error_occurred" = "An error occurred";
+
+// Animal Related
+"animal_name" = "Animal Name";
+"animal_description" = "Animal Description";
+"habitat" = "Habitat";
+"diet" = "Diet";
+"characteristics" = "Characteristics";
+
+// Stamp Related
+"stamp_collected" = "Stamp Collected";
+"total_stamps" = "Total Stamps";
+"collected_stamps" = "Collected Stamps";
+"remaining_stamps" = "Remaining Stamps"; 

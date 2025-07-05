@@ -10,6 +10,7 @@ import SwiftData
 
 @main
 struct stamp_zooApp: App {
+    @StateObject private var localizationManager = LocalizationManager.shared
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
@@ -25,7 +26,7 @@ struct stamp_zooApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainTabView()
         }
         .modelContainer(sharedModelContainer)
     }

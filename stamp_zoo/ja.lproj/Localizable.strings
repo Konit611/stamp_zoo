@@ -1,0 +1,47 @@
+/* 
+  Localizable.strings
+  stamp_zoo
+  
+  Japanese localization
+*/
+
+// 共通
+"done" = "完了";
+"cancel" = "キャンセル";
+"save" = "保存";
+"edit" = "編集";
+"delete" = "削除";
+"add" = "追加";
+"search" = "検索";
+"settings" = "設定";
+
+// 言語設定
+"language_settings" = "言語設定";
+"language_selection" = "言語選択";
+
+// アプリ情報
+"about_app" = "アプリ情報";
+
+// タブメニュー
+"explorer" = "探検";
+"field_guide" = "図鑑";
+"bingo_home" = "ビンゴ";
+
+// メッセージ
+"welcome_message" = "スタンプ動物園へようこそ！";
+"no_data_available" = "データがありません";
+"loading" = "読み込み中...";
+"error_occurred" = "エラーが発生しました";
+
+// 動物関連
+"animal_name" = "動物名";
+"animal_description" = "動物説明";
+"habitat" = "生息地";
+"diet" = "食事";
+"characteristics" = "特徴";
+
+// スタンプ関連
+"stamp_collected" = "スタンプ収集";
+"total_stamps" = "総スタンプ";
+"collected_stamps" = "収集したスタンプ";
+"remaining_stamps" = "残りのスタンプ"; 
