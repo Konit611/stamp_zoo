@@ -72,6 +72,12 @@ class BingoHomeViewModel {
     
     // MARK: - Methods
     
+    /// ModelContext 업데이트
+    func updateModelContext(_ newContext: ModelContext) {
+        self.modelContext = newContext
+        loadAnimals()
+    }
+    
     /// 동물 데이터 로드
     private func loadAnimals() {
         guard let modelContext = modelContext else { return }

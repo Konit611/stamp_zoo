@@ -10,18 +10,13 @@ import SwiftData
 
 struct BingoHomeView: View {
     @Environment(\.modelContext) private var modelContext
-    @State private var viewModel: BingoHomeViewModel
+    @State private var viewModel = BingoHomeViewModel()
     @State private var presentedDestination: NavigationDestination?
     
     enum NavigationDestination {
         case settings
         case bingoDetail
         case bingoQR
-    }
-    
-    init() {
-        // 초기화 시에는 modelContext가 없으므로 나중에 설정
-        _viewModel = State(initialValue: BingoHomeViewModel())
     }
     
     var body: some View {
@@ -63,8 +58,8 @@ struct BingoHomeView: View {
                 }
             }
             .onAppear {
-                // modelContext가 사용 가능해지면 viewModel에 설정
-                viewModel = BingoHomeViewModel(modelContext: modelContext)
+                // viewModel에 modelContext 설정
+                viewModel.updateModelContext(modelContext)
             }
         }
     }
