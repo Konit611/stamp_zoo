@@ -38,20 +38,31 @@ struct ExplorerDetailAnimalsView: View {
                         .gesture(
                             DragGesture()
                                 .onChanged { value in
-                                    dragOffset = value.translation.width
+                                    // 세로 스크롤이 아닌 경우에만 좌우 드래그 처리
+                                    if abs(value.translation.width) > abs(value.translation.height) {
+                                        dragOffset = value.translation.width
+                                    }
                                 }
                                 .onEnded { value in
                                     let threshold: CGFloat = 50
                                     
-                                    withAnimation(.easeInOut(duration: 0.5)) {
-                                        if value.translation.width > threshold && currentIndex > 0 {
-                                            currentIndex -= 1
-                                        } else if value.translation.width < -threshold && currentIndex < animals.count - 1 {
-                                            currentIndex += 1
+                                    // 가로 방향 드래그가 더 큰 경우에만 카드 전환
+                                    if abs(value.translation.width) > abs(value.translation.height) {
+                                        withAnimation(.easeInOut(duration: 0.5)) {
+                                            if value.translation.width > threshold && currentIndex > 0 {
+                                                currentIndex -= 1
+                                            } else if value.translation.width < -threshold && currentIndex < animals.count - 1 {
+                                                currentIndex += 1
+                                            }
+                                            
+                                            proxy.scrollTo(currentIndex, anchor: .center)
+                                            dragOffset = 0
                                         }
-                                        
-                                        proxy.scrollTo(currentIndex, anchor: .center)
-                                        dragOffset = 0
+                                    } else {
+                                        // 세로 드래그인 경우 offset 리셋
+                                        withAnimation(.easeInOut(duration: 0.2)) {
+                                            dragOffset = 0
+                                        }
                                     }
                                 }
                         )
@@ -62,6 +73,7 @@ struct ExplorerDetailAnimalsView: View {
                 }
             }
         }
+        .ignoresSafeArea(.container, edges: []) // SafeArea를 모든 가장자리에서 존중
     }
     
     private func animalCardsStack(geometry: GeometryProxy) -> some View {
@@ -79,10 +91,7 @@ struct ExplorerDetailAnimalsView: View {
             animalImage: animal.image,
             description: getShortDescription(for: animal.name)
         )
-        .frame(width: geometry.size.width - 60, height: geometry.size.height - geometry.safeAreaInsets.bottom + 40) // 탭바 바로 위까지
-        .padding(.top, 30) // 위쪽 패딩 추가
-        .padding(.leading, index == 0 ? 20 : 0)
-        .padding(.trailing, index == animals.count - 1 ? 20 : 0)
+        .frame(width: geometry.size.width)
         .id(index)
     }
     
@@ -138,19 +147,21 @@ struct AnimalDetailCard: View {
     let description: String
     
     var body: some View {
-        ZStack {
-            Color.green.opacity(0.3) // 배경색
-            
-            ScrollView(.vertical, showsIndicators: true) {
-                VStack(spacing: 0) {
-                    animalImageView
-                    animalInfoView
-                }
-                .padding(.top, 20)
-                .padding(.bottom, 20)
+        ScrollView {
+            VStack(spacing: 0) {
+                animalImageView
+                animalInfoView
             }
+            .background(Color("zooPopGreen").opacity(0.3))
+            .cornerRadius(20)
+            .padding(.horizontal, 20)
+            .padding(.top, 20)
+            .padding(.bottom, 100) // 탭바 공간 확보
         }
-        .cornerRadius(20)
+        .background(Color(.systemGray6))
+        .safeAreaInset(edge: .top) {
+            Color.clear.frame(height: 1) // 상단 SafeArea 확실히 보호
+        }
     }
     
     private var animalImageView: some View {
@@ -165,6 +176,7 @@ struct AnimalDetailCard: View {
                 )
         }
         .padding(.horizontal, 20)
+        .padding(.top, 40) // 네비게이션 바와의 겹침 방지를 위한 추가 패딩
     }
     
     private var animalInfoView: some View {
@@ -185,7 +197,8 @@ struct AnimalDetailCard: View {
                 .lineSpacing(6)
                 .foregroundColor(.black.opacity(0.9))
         }
-        .padding(20)
+        .padding(.horizontal, 20)
+        .padding(.vertical, 20)
     }
 }
 
