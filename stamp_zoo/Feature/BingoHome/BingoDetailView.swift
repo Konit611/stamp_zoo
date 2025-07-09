@@ -70,13 +70,13 @@ struct BingoDetailView: View {
         }
     }
     
-    // MARK: - Stamp Cell (BingoHomeView와 동일)
+    // MARK: - Stamp Cell
     private func stampCell(for index: Int) -> some View {
         let stamp = viewModel.getStamp(at: index)
         
         return ZStack {
             RoundedRectangle(cornerRadius: 15)
-                .fill(Color.gray.opacity(0.3))
+                .fill(Color("zooBackgroundBlack"))
                 .frame(height: 100)
             
             if let stamp = stamp, stamp.isCollected, let animal = stamp.animal {
@@ -106,17 +106,8 @@ struct BingoDetailView: View {
                 .padding(8)
                 .background(Color.white.opacity(0.9))
                 .clipShape(RoundedRectangle(cornerRadius: 10))
-            } else {
-                // 빈 스탬프 슬롯
-                VStack {
-                    Image(systemName: "pawprint")
-                        .font(.title2)
-                        .foregroundColor(.gray)
-                    Text("Empty")
-                        .font(.caption2)
-                        .foregroundColor(.gray)
-                }
             }
+            // 빈 스탬프 슬롯은 배경색만 표시 (아무 내용 없음)
         }
     }
 }
