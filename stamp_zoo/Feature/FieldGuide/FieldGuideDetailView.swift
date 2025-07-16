@@ -63,7 +63,7 @@ struct FieldGuideDetailView: View {
     private var animalInfoView: some View {
         VStack(alignment: .leading, spacing: 16) {
             // 동물 이름과 지역명
-            HStack(alignment: .bottom) {
+            HStack(alignment: .center) {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(animal.name)
                         .font(.system(size: 28, weight: .bold))

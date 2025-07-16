@@ -22,10 +22,24 @@ struct ExplorerDetailView: View {
                         .fill(Color.green.opacity(0.6))
                         .frame(height: 300)
                         .overlay(
-                            Image(systemName: "leaf.fill")
-                                .font(.system(size: 60))
-                                .foregroundColor(.white.opacity(0.8))
+                            Group {
+                                if let image = UIImage(named: facility.image) {
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(height: 300)
+                                        .clipped()
+                                } else {
+                                    // 이미지 로드 실패 시 기본 이미지
+                                    Image("default_image")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(height: 300)
+                                        .clipped()
+                                }
+                            }
                         )
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 20)
@@ -47,14 +61,19 @@ struct ExplorerDetailView: View {
                         Spacer()
                         
                         // 로고 이미지
-                        RoundedRectangle(cornerRadius: 8)
-                            .fill(Color.green.opacity(0.8))
-                            .frame(width: 50, height: 50)
-                            .overlay(
-                                Image(systemName: "pawprint.fill")
+                        Group {
+                            if let logoImage = UIImage(named: facility.logoImage) {
+                                Image(uiImage: logoImage)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 50, height: 50)
+                            } else {
+                                Image(systemName: "building.2")
                                     .font(.system(size: 24))
                                     .foregroundColor(.white)
-                            )
+                            }
+                        }
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
                     }
                     
                     // 설명

@@ -141,13 +141,26 @@ struct AnimalDetailCard: View {
                 .fill(Color.blue.opacity(0.7))
                 .frame(height: 400)
                 .overlay(
-                    Image(systemName: "photo")
-                        .font(.system(size: 80))
-                        .foregroundColor(.white.opacity(0.8))
+                    Group {
+                        if let image = UIImage(named: animalImage) {
+                            Image(uiImage: image)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(height: 400)
+                                .clipped()
+                        } else {
+                            Image("default_image")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(height: 400)
+                                .clipped()
+                        }
+                    }
                 )
+                .clipShape(RoundedRectangle(cornerRadius: 16))
         }
         .padding(.horizontal, 20)
-        .padding(.top, 40) // 네비게이션 바와의 겹침 방지를 위한 추가 패딩
+        .padding(.top, 20) // 네비게이션 바와의 겹침 방지를 위한 추가 패딩
     }
     
     private var animalInfoView: some View {

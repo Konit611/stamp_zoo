@@ -106,14 +106,6 @@ struct ZooCard: View {
         VStack(spacing: 0) {
             // 이미지 영역
             ZStack {
-                // RoundedRectangle(cornerRadius: 12)
-                //     .fill(Color.blue.opacity(0.6))
-                //     .frame(height: 140)
-                //     .overlay(
-                //         Image(systemName: "photo")
-                //             .font(.system(size: 40))
-                //             .foregroundColor(.white.opacity(0.8))
-                //     )
                 Image(imageName)
                     .resizable()
                     .scaledToFill()

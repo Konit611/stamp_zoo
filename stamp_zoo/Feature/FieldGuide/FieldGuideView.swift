@@ -11,6 +11,17 @@ import SwiftData
 struct FieldGuideView: View {
     @Query private var animals: [Animal]
     
+    // 도감 슬롯 계산 (최소 12개, 3의 배수로 맞춤)
+    private var totalFieldGuideSlots: Range<Int> {
+        let animalCount = animals.count
+        let minSlots = 12
+        let slotsNeeded = max(animalCount + 6, minSlots) // 현재 동물 + 여유분 또는 최소 개수
+        let roundedSlots = ((slotsNeeded + 2) / 3) * 3 // 3의 배수로 맞춤
+        return 0..<roundedSlots
+    }
+    
+
+    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -30,7 +41,7 @@ struct FieldGuideView: View {
                     
                     // 도감 격자
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 3), spacing: 10) {
-                        ForEach(0..<30, id: \.self) { index in
+                        ForEach(totalFieldGuideSlots, id: \.self) { index in
                             animalCell(for: index)
                         }
                     }
@@ -53,51 +64,49 @@ struct FieldGuideView: View {
                 NavigationLink(destination: FieldGuideDetailView(animal: animal)) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 15)
-                            .fill(Color.gray.opacity(0.8))
+                            .fill(isAnimalCollected(animal) ? Color("zooBackgroundBlack").opacity(0.8) : Color.gray.opacity(0.5))
                             .frame(height: 100)
                         
-                        VStack {
-                            // 동물 이미지
-                            Group {
-                                if let image = UIImage(named: animal.image) {
-                                    Image(uiImage: image)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                } else {
-                                    // 기본 동물 이미지
-                                    Image(systemName: "pawprint.fill")
-                                        .font(.system(size: 30))
-                                        .foregroundColor(.white)
+                        // 모든 동물 이미지 표시 (수집 여부에 관계없이)
+                        VStack(spacing: 4) {
+                            ZStack {
+                                // 동물 이미지
+                                Group {
+                                    if let image = UIImage(named: animal.stampImage) {
+                                        Image(uiImage: image)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                    } else {
+                                        // 이미지 로드 실패 시 기본 이미지
+                                        Image("default_image")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                    }
+                                }
+                                .padding(12)
+                                
+                                // 미수집된 동물은 어두운 오버레이 추가
+                                if !isAnimalCollected(animal) {
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .fill(Color.black.opacity(0.7))
+                                        .frame(width: 70, height: 60)
+                                        .overlay(
+                                            Image(systemName: "questionmark")
+                                                .font(.title2)
+                                                .foregroundColor(.white)
+                                        )
                                 }
                             }
-                            .frame(width: 80, height: 70)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            
-                            Text(animal.name)
-                                .font(.caption2)
-                                .foregroundColor(.white)
-                                .lineLimit(1)
                         }
-                        .padding(8)
                     }
                 }
                 .buttonStyle(PlainButtonStyle())
             } else {
-                // 빈 도감 슬롯 (검은색 배경) - 클릭 불가
+                // 빈 도감 슬롯 - 클릭 불가
                 ZStack {
                     RoundedRectangle(cornerRadius: 15)
-                        .fill(Color.black.opacity(0.9))
+                        .fill(Color("zooBackgroundBlack"))
                         .frame(height: 100)
-                        .overlay(
-                            VStack {
-                                Image(systemName: "questionmark")
-                                    .font(.title2)
-                                    .foregroundColor(.gray)
-                                Text("???")
-                                    .font(.caption2)
-                                    .foregroundColor(.gray)
-                            }
-                        )
                 }
             }
         }
@@ -110,6 +119,11 @@ struct FieldGuideView: View {
             return animals[index]
         }
         return nil
+    }
+    
+    private func isAnimalCollected(_ animal: Animal) -> Bool {
+        // 빙고 번호가 있으면 수집된 것으로 간주
+        return animal.bingoNumber != nil
     }
 }
 
