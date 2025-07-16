@@ -53,6 +53,7 @@ class SampleDataService {
         let wakuwakuZoo = Facility(
             name: "쿠시로 동물원",
             type: .zoo,
+            location: "홋카이도, 쿠시로시",
             image: "kushiro_facility",
             logoImage: "kushiro_logo",
             mapImage: "kushiro_map",

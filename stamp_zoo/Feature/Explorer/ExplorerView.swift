@@ -66,15 +66,13 @@ struct ExplorerView: View {
                     ], spacing: 10) {
                         ForEach(viewModel.filteredFacilities(for: selectedCategory), id: \.facility.id) { facilityCard in
                             NavigationLink(destination: ExplorerDetailView(
-                                title: facilityCard.title,
-                                subtitle: viewModel.getSubtitle(for: facilityCard.facility),
-                                imageName: facilityCard.imageName,
+                                facility: facilityCard.facility,
                                 isVisited: facilityCard.isVisited
                             )) {
                                 ZooCard(
                                     imageName: facilityCard.imageName,
                                     title: facilityCard.title,
-                                    subtitle: viewModel.getSubtitle(for: facilityCard.facility),
+                                    subtitle: facilityCard.location,
                                     isVisited: facilityCard.isVisited,
                                     isZoo: facilityCard.isZoo
                                 )
@@ -108,14 +106,19 @@ struct ZooCard: View {
         VStack(spacing: 0) {
             // 이미지 영역
             ZStack {
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(Color.blue.opacity(0.6))
-                    .frame(height: 140)
-                    .overlay(
-                        Image(systemName: "photo")
-                            .font(.system(size: 40))
-                            .foregroundColor(.white.opacity(0.8))
-                    )
+                // RoundedRectangle(cornerRadius: 12)
+                //     .fill(Color.blue.opacity(0.6))
+                //     .frame(height: 140)
+                //     .overlay(
+                //         Image(systemName: "photo")
+                //             .font(.system(size: 40))
+                //             .foregroundColor(.white.opacity(0.8))
+                //     )
+                Image(imageName)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(height: 120)
+                    .cornerRadius(12)
             }
             .padding(.top, 12)
             .padding(.horizontal, 12)

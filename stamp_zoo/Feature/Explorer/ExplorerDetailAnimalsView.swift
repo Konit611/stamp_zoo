@@ -9,17 +9,21 @@ import SwiftUI
 import SwiftData
 
 struct ExplorerDetailAnimalsView: View {
-    let zooTitle: String
-    let zooSubtitle: String
+    let facility: Facility
     
     @Environment(\.dismiss) private var dismiss
-    @Query private var animals: [Animal]
+    @Query private var allAnimals: [Animal]
     @State private var currentIndex: Int = 0
     @State private var dragOffset: CGFloat = 0
     
+    // 해당 시설의 동물들만 필터링
+    private var animals: [Animal] {
+        allAnimals.filter { $0.facility.id == facility.id }
+    }
+    
     var body: some View {
         mainContentView
-            .navigationTitle(zooTitle)
+            .navigationTitle(facility.name)
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
             .toolbar {
@@ -87,9 +91,8 @@ struct ExplorerDetailAnimalsView: View {
     private func animalCardView(animal: Animal, index: Int, geometry: GeometryProxy) -> some View {
         AnimalDetailCard(
             animalName: animal.name,
-            animalSubName: getAnimalSubName(animal.name),
             animalImage: animal.image,
-            description: getShortDescription(for: animal.name)
+            description: animal.detail
         )
         .frame(width: geometry.size.width)
         .id(index)
@@ -107,42 +110,10 @@ struct ExplorerDetailAnimalsView: View {
                 .clipShape(Circle())
         }
     }
-    
-    private func getAnimalSubName(_ name: String) -> String {
-        switch name {
-        case "늑대": return "おおかみ"
-        case "얼룩말": return "しまうま"
-        case "하마": return "かば"
-        case "치타": return "ちーたー"
-        case "북극곰": return "ほっきょくぐま"
-        case "바다사자": return "あしか"
-        default: return name.lowercased()
-        }
-    }
-    
-    private func getShortDescription(for animalName: String) -> String {
-        switch animalName {
-        case "늑대":
-            return "늑대는 개과에 속하는 육식 포유동물로, 현재 개의 조상으로 여겨집니다. 뛰어난 사회성을 가진 동물로, 무리(팩)를 이루어 생활합니다. 사냥할 때는 뛰어난 팀워크를 발휘하며, 생태계에서 최상위 포식자로서 중요한 역할을 합니다.늑대는 개과에 속하는 육식 포유동물로, 현재 개의 조상으로 여겨집니다. 뛰어난 사회성을 가진 동물로, 무리(팩)를 이루어 생활합니다. 사냥할 때는 뛰어난 팀워크를 발휘하며, 생태계에서 최상위 포식자로서 중요한 역할을 합니다.늑대는 개과에 속하는 육식 포유동물로, 현재 개의 조상으로 여겨집니다. 뛰어난 사회성을 가진 동물로, 무리(팩)를 이루어 생활합니다. 사냥할 때는 뛰어난 팀워크를 발휘하며, 생태계에서 최상위 포식자로서 중요한 역할을 합니다.늑대는 개과에 속하는 육식 포유동물로, 현재 개의 조상으로 여겨집니다. 뛰어난 사회성을 가진 동물로, 무리(팩)를 이루어 생활합니다. 사냥할 때는 뛰어난 팀워크를 발휘하며, 생태계에서 최상위 포식자로서 중요한 역할을 합니다."
-        case "얼룩말":
-            return "얼룩말은 아프리카 대륙에 서식하는 말과 동물로, 검은색과 흰색의 독특한 줄무늬 패턴으로 유명합니다. 줄무늬는 해충을 쫓고 포식자로부터 보호하는 역할을 합니다."
-        case "하마":
-            return "하마는 아프리카 대륙의 강과 호수에 서식하는 대형 포유동물입니다. 반수생 동물로 낮 시간의 대부분을 물 속에서 보내며, 영역 의식이 매우 강한 동물입니다."
-        case "치타":
-            return "치타는 지구상에서 가장 빠른 육상 동물로, 최고 시속 120km의 속도로 달릴 수 있습니다. 속도에 최적화된 몸을 가지고 있으며, 현재 멸종 위기에 처해 있습니다."
-        case "북극곰":
-            return "북극곰은 북극권에 서식하는 현존 최대의 육상 육식동물입니다. 극한의 추위에 적응된 독특한 신체 특징을 가지고 있으며, 기후변화로 인해 위기에 직면해 있습니다."
-        case "바다사자":
-            return "바다사자는 해양 포유동물로 뛰어난 수영 능력을 가지고 있습니다. 사회성이 강하고 지능이 높은 동물로, 육지와 바다를 오가며 생활합니다."
-        default:
-            return "이 동물에 대한 상세한 정보를 준비 중입니다."
-        }
-    }
 }
 
 struct AnimalDetailCard: View {
     let animalName: String
-    let animalSubName: String
     let animalImage: String
     let description: String
     
@@ -185,10 +156,6 @@ struct AnimalDetailCard: View {
                 Text(animalName)
                     .font(.system(size: 28, weight: .bold))
                     .foregroundColor(.black)
-                
-                Text(animalSubName)
-                    .font(.system(size: 18))
-                    .foregroundColor(.black.opacity(0.8))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
@@ -205,8 +172,16 @@ struct AnimalDetailCard: View {
 #Preview {
     NavigationView {
         ExplorerDetailAnimalsView(
-            zooTitle: "쿠시로시립동물원",
-            zooSubtitle: "홋카이도, 쿠시로시"
+            facility: Facility(
+                name: "쿠시로시립동물원",
+                type: .zoo,
+                location: "홋카이도, 쿠시로시",
+                image: "deer_image",
+                logoImage: "zoo_logo",
+                mapImage: "zoo_map",
+                mapLink: "https://example.com",
+                detail: "다양한 동물들과 함께하는 즐거운 동물원입니다."
+            )
         )
     }
     .modelContainer(for: [Animal.self, Facility.self])

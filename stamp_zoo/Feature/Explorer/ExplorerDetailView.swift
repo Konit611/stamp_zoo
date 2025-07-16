@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct ExplorerDetailView: View {
-    let title: String
-    let subtitle: String
-    let imageName: String
+    let facility: Facility
     let isVisited: Bool
     
     @Environment(\.dismiss) private var dismiss
@@ -37,11 +35,11 @@ struct ExplorerDetailView: View {
                     // 제목과 로고
                     HStack(alignment: .top, spacing: 12) {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(title)
+                            Text(facility.name)
                                 .font(.title)
                                 .fontWeight(.bold)
                             
-                            Text(subtitle)
+                            Text(facility.location ?? "위치 정보 없음")
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                         }
@@ -60,7 +58,7 @@ struct ExplorerDetailView: View {
                     }
                     
                     // 설명
-                    Text("자연환경 가운데 동물을 견학하며 즐기고 돌아다니며 자연을 즐기며 돌아다니며 자연 환경이 곳곳에 동물을 견학하며 즐기고 돌아다니며 자연을 즐기며 돌아다니며 자연 환경이 곳곳에 동물을 견학하며 즐기고 돌아다니며 자연을 즐기며 돌아다니며 자연 환경이 곳곳에 동물을 견학하며 즐기고 돌아다니며 자연을 즐기며 돌아다니며 자연 환경이 곳곳에 동물을 견학하며 즐기고 돌아다니며 자연을 즐기며 돌아다니며 자연 환경이 곳곳에 동물을 견학하며 즐기고 돌아다니며 자연을 즐기며 돌아다니며 자연 환경이 곳곳에 동물을 견학하며 즐기고 돌아다니며 자연을 즐기며 돌아다니며 자연 환경이 곳곳에 동물을 견학하며 즐기고 돌아다니며 자연을 즐기며 돌아다니며 자연 환경이 곳곳에 동물을 견학하며 즐기고 돌아다니며 자연을 즐기며 돌아다니며 자연 환경이 곳곳에 동물을 견학하며 즐기고 돌아다니며 자연을 즐기며 돌아다니며 자연 환경이 곳곳에 동물을 견학하며 즐기고 돌아다니며 자연을 즐기며 돌아다니며 자연 환경이 곳곳에")
+                    Text(facility.detail)
                         .font(.body)
                         .lineSpacing(4)
                 }
@@ -86,8 +84,7 @@ struct ExplorerDetailView: View {
             
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink(destination: ExplorerDetailAnimalsView(
-                    zooTitle: title,
-                    zooSubtitle: subtitle
+                    facility: facility
                 )) {
                     HStack(spacing: 6) {
                         Text("동물을 보러")
@@ -109,9 +106,16 @@ struct ExplorerDetailView: View {
 #Preview {
     NavigationView {
         ExplorerDetailView(
-            title: "쿠시로시립동물원",
-            subtitle: "홋카이도, 쿠시로시",
-            imageName: "deer_image",
+            facility: Facility(
+                name: "쿠시로시립동물원",
+                type: .zoo,
+                location: "홋카이도, 쿠시로시",
+                image: "deer_image",
+                logoImage: "zoo_logo",
+                mapImage: "zoo_map",
+                mapLink: "https://example.com",
+                detail: "다양한 동물들과 함께하는 즐거운 동물원입니다."
+            ),
             isVisited: false
         )
     }

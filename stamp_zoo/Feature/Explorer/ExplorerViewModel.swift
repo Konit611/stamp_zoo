@@ -16,6 +16,7 @@ struct FacilityCard {
     let isZoo: Bool
     
     var title: String { facility.name }
+    var location: String { facility.location ?? "위치 정보 없음" }
     var imageName: String { facility.image }
     var logoImageName: String { facility.logoImage }
 }
@@ -87,18 +88,9 @@ class ExplorerViewModel {
         return animals.contains { $0.bingoNumber != nil }
     }
     
-    /// 시설의 위치 정보 생성 (임시)
+    /// 시설의 위치 정보 가져오기
     func getSubtitle(for facility: Facility) -> String {
-        // 실제로는 facility에 location 필드가 있을 수 있지만, 
-        // 현재는 임시로 생성
-        let locations = [
-            "홋카이도, 쿠시로시",
-            "도쿄, 우에노",
-            "오사카, 텐노지",
-            "교토, 히가시야마",
-            "가나가와, 요코하마"
-        ]
-        return locations.randomElement() ?? "위치 정보 없음"
+        return facility.location ?? "위치 정보 없음"
     }
 }
 
