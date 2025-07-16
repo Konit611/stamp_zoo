@@ -212,26 +212,26 @@ struct FieldGuideDetailView: View {
     }
 }
 
-#Preview {
-    // 샘플 동물 데이터로 프리뷰
-    let sampleFacility = Facility(
-        name: "샘플 동물원",
-        image: "zoo_main",
-        logoImage: "zoo_logo", 
-        mapImage: "zoo_map",
-        mapLink: "https://example.com",
-        detail: "샘플 동물원입니다."
-    )
-    
-    let sampleAnimal = Animal(
-        name: "늑대",
-        detail: "늑대는 개과에 속하는 육식 포유동물로, 현재 개의 조상으로 여겨집니다. 뛰어난 사회성을 가진 동물로, 무리(팩)를 이루어 생활합니다.",
-        image: "wolf_image",
-        stampImage: "wolf_stamp",
-        facility: sampleFacility
-    )
-    
-    NavigationView {
-        FieldGuideDetailView(animal: sampleAnimal)
-    }
-} 
+//#Preview {
+//    // 샘플 동물 데이터로 프리뷰
+//    let sampleFacility = Facility(
+//        name: "샘플 동물원",
+//        image: "zoo_main",
+//        logoImage: "zoo_logo", 
+//        mapImage: "zoo_map",
+//        mapLink: "https://example.com",
+//        detail: "샘플 동물원입니다."
+//    )
+//    
+//    let sampleAnimal = Animal(
+//        name: "늑대",
+//        detail: "늑대는 개과에 속하는 육식 포유동물로, 현재 개의 조상으로 여겨집니다. 뛰어난 사회성을 가진 동물로, 무리(팩)를 이루어 생활합니다.",
+//        image: "wolf_image",
+//        stampImage: "wolf_stamp",
+//        facility: sampleFacility
+//    )
+//    
+//    NavigationView {
+//        FieldGuideDetailView(animal: sampleAnimal)
+//    }
+//} 

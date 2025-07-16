@@ -42,31 +42,6 @@ struct stamp_zooApp: App {
     
     // MARK: - Sample Data Loading
     private static func loadSampleDataIfNeeded(container: ModelContainer) async {
-        let context = ModelContext(container)
-        
-        // 이미 데이터가 있는지 확인
-        let fetchDescriptor = FetchDescriptor<Animal>()
-        let existingAnimals = try? context.fetch(fetchDescriptor)
-        
-        if existingAnimals?.isEmpty ?? true {
-            // 샘플 데이터 생성
-            let sampleAnimals = Animal.createSampleAnimals()
-            
-            // Facility 먼저 저장 (중복 방지)
-            var savedFacilities: Set<String> = []
-            for animal in sampleAnimals {
-                if !savedFacilities.contains(animal.facility.name) {
-                    context.insert(animal.facility)
-                    savedFacilities.insert(animal.facility.name)
-                }
-            }
-            
-            // Animal 데이터 저장
-            for animal in sampleAnimals {
-                context.insert(animal)
-            }
-            
-            try? context.save()
-        }
+        await SampleDataService.loadSampleDataIfNeeded(in: container)
     }
 }

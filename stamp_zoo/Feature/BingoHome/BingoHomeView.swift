@@ -134,7 +134,6 @@ struct BingoHomeView: View {
             if let stamp = stamp, stamp.isCollected, let animal = stamp.animal {
                 // 수집된 스탬프 표시
                 VStack {
-                    // 스탬프 이미지 (실패 시 기본 이미지)
                     Group {
                         if let image = UIImage(named: animal.stampImage) {
                             Image(uiImage: image)
@@ -147,17 +146,8 @@ struct BingoHomeView: View {
                                 .aspectRatio(contentMode: .fit)
                         }
                     }
-                    .frame(width: 40, height: 40)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                    
-                    Text(animal.name)
-                        .font(.caption)
-                        .foregroundColor(.primary)
-                        .lineLimit(1)
                 }
                 .padding(8)
-                .background(Color.white.opacity(0.9))
-                .clipShape(RoundedRectangle(cornerRadius: 10))
             }
             // 빈 스탬프 슬롯은 배경색만 표시 (아무 내용 없음)
         }

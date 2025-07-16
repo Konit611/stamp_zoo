@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ExplorerView: View {
+    @Environment(\.modelContext) private var modelContext
+    @State private var viewModel = ExplorerViewModel()
     @State private var selectedCategory: Category = .all
     
     enum Category: String, CaseIterable {
@@ -45,7 +48,7 @@ struct ExplorerView: View {
                                 .padding(.vertical, 8)
                                 .background(
                                     selectedCategory == category ? 
-                                    Color.green.opacity(0.8) : Color.clear
+                                    Color("zooPopGreen") : Color.clear
                                 )
                                 .cornerRadius(20)
                         }
@@ -61,18 +64,19 @@ struct ExplorerView: View {
                         GridItem(.flexible(), spacing: 10),
                         GridItem(.flexible(), spacing: 10)
                     ], spacing: 10) {
-                        ForEach(0..<6) { index in
+                        ForEach(viewModel.filteredFacilities(for: selectedCategory), id: \.facility.id) { facilityCard in
                             NavigationLink(destination: ExplorerDetailView(
-                                title: "쿠시로시립동물원",
-                                subtitle: "홋카이도, 쿠시로시",
-                                imageName: "deer_image",
-                                isVisited: index % 2 == 0
+                                title: facilityCard.title,
+                                subtitle: viewModel.getSubtitle(for: facilityCard.facility),
+                                imageName: facilityCard.imageName,
+                                isVisited: facilityCard.isVisited
                             )) {
                                 ZooCard(
-                                    imageName: "deer_image",
-                                    title: "쿠시로시립동물원",
-                                    subtitle: "홋카이도, 쿠시로시",
-                                    isVisited: index % 2 == 0
+                                    imageName: facilityCard.imageName,
+                                    title: facilityCard.title,
+                                    subtitle: viewModel.getSubtitle(for: facilityCard.facility),
+                                    isVisited: facilityCard.isVisited,
+                                    isZoo: facilityCard.isZoo
                                 )
                             }
                             .buttonStyle(PlainButtonStyle())
@@ -85,6 +89,10 @@ struct ExplorerView: View {
                 Spacer()
             }
             .navigationBarHidden(true)
+            .onAppear {
+                // viewModel에 modelContext 설정
+                viewModel.updateModelContext(modelContext)
+            }
         }
     }
 }
@@ -94,6 +102,7 @@ struct ZooCard: View {
     let title: String
     let subtitle: String
     let isVisited: Bool
+    let isZoo: Bool
     
     var body: some View {
         VStack(spacing: 0) {
@@ -126,10 +135,10 @@ struct ZooCard: View {
                 HStack {
                     Spacer()
                     Circle()
-                        .fill(isVisited ? Color.green : Color.blue)
+                        .fill(isZoo ? Color.green : Color.blue)
                         .frame(width: 32, height: 32)
                         .overlay(
-                            Image(systemName: isVisited ? "checkmark" : "arrow.right")
+                            Image(systemName: "arrow.right")
                                 .font(.system(size: 14))
                                 .foregroundColor(.white)
                         )
