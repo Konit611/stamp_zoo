@@ -16,7 +16,14 @@ struct FacilityCard {
     let isZoo: Bool
     
     var title: String { facility.name }
-    var location: String { facility.location ?? "위치 정보 없음" }
+    var location: String { 
+        facility.location ?? LocalizationHelper.shared.localizedText(
+            korean: "위치 정보 없음",
+            english: "No Location Info",
+            japanese: "位置情報なし",
+            chinese: "无位置信息"
+        )
+    }
     var imageName: String { facility.image }
     var logoImageName: String { facility.logoImage }
 }
@@ -25,6 +32,7 @@ struct FacilityCard {
 class ExplorerViewModel {
     private var modelContext: ModelContext?
     private var allFacilities: [Facility] = []
+    private var localizationHelper = LocalizationHelper.shared
     
     init(modelContext: ModelContext? = nil) {
         self.modelContext = modelContext
@@ -90,7 +98,12 @@ class ExplorerViewModel {
     
     /// 시설의 위치 정보 가져오기
     func getSubtitle(for facility: Facility) -> String {
-        return facility.location ?? "위치 정보 없음"
+        return facility.location ?? LocalizationHelper.shared.localizedText(
+            korean: "위치 정보 없음",
+            english: "No Location Info",
+            japanese: "位置情報나し",
+            chinese: "无位置信息"
+        )
     }
 }
 

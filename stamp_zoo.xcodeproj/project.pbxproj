@@ -200,6 +200,7 @@
 				Base,
 				ko,
 				ja,
+				zh,
 			);
 			mainGroup = C6DB0A462E1897860018CF9A;
 			minimizedProjectReferenceProxies = 1;

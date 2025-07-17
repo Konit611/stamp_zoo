@@ -35,14 +35,15 @@ class LocalizationManager: ObservableObject {
     }
     
     var supportedLanguages: [String] {
-        return ["ko", "en", "ja"]
+        return ["ko", "en", "ja", "zh"]
     }
     
     var supportedLanguageNames: [String: String] {
         return [
             "ko": "한국어",
             "en": "English",
-            "ja": "日本語"
+            "ja": "日本語",
+            "zh": "中文"
         ]
     }
 } 

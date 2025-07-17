@@ -186,14 +186,23 @@ struct AnimalDetailCard: View {
     NavigationView {
         ExplorerDetailAnimalsView(
             facility: Facility(
-                name: "쿠시로시립동물원",
+                nameKo: "쿠시로시립동물원",
+                nameEn: "Kushiro City Zoo",
+                nameJa: "釧路市立動物園",
+                nameZh: "钏路市立动物园",
                 type: .zoo,
-                location: "홋카이도, 쿠시로시",
+                locationKo: "홋카이도, 쿠시로시",
+                locationEn: "Hokkaido, Kushiro City",
+                locationJa: "北海道、釧路市",
+                locationZh: "北海道，钏路市",
                 image: "deer_image",
                 logoImage: "zoo_logo",
                 mapImage: "zoo_map",
                 mapLink: "https://example.com",
-                detail: "다양한 동물들과 함께하는 즐거운 동물원입니다."
+                detailKo: "다양한 동물들과 함께하는 즐거운 동물원입니다.",
+                detailEn: "A zoo with various animals.",
+                detailJa: "様々な動物と一緒に楽しい動物園です。",
+                detailZh: "与各种动物一起的快乐动物园。"
             )
         )
     }

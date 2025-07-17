@@ -1,0 +1,79 @@
+/* 
+  Localizable.strings
+  stamp_zoo
+  
+  Chinese localization
+*/
+
+// 공통
+"done" = "完成";
+"cancel" = "取消";
+"save" = "保存";
+"edit" = "编辑";
+"delete" = "删除";
+"add" = "添加";
+"search" = "搜索";
+"settings" = "设置";
+
+// 언어 설정
+"language_settings" = "语言设置";
+"language_selection" = "语言选择";
+
+// 앱 정보
+"about_app" = "关于应用";
+
+// 탭 메뉴
+"explorer" = "探索";
+"field_guide" = "图鉴";
+"bingo_home" = "宾果";
+
+// 메시지
+"welcome_message" = "欢迎来到邮票动物园！";
+"no_data_available" = "无数据";
+"loading" = "加载中...";
+"error_occurred" = "发生错误";
+
+// 동물 관련
+"animal_name" = "动物名称";
+"animal_description" = "动物描述";
+"habitat" = "栖息地";
+"diet" = "饮食";
+"characteristics" = "特征";
+
+// 스탬프 관련
+"stamp_collected" = "已收集邮票";
+"total_stamps" = "总邮票";
+"collected_stamps" = "已收集邮票";
+"remaining_stamps" = "剩余邮票";
+
+// 스탬프 랠리 관련
+"stamp_rally_title" = "激动人心的\n邮票拉力赛";
+"get_stamp_with_qr" = "用QR获取邮票";
+"home" = "主页";
+"zoo" = "动物园";
+"list" = "列表";
+
+// 네비게이션 관련
+"back" = "返回";
+"close" = "关闭";
+
+// 빙고 상세 관련
+"bingo_detail" = "宾果详情";
+"bingo_progress" = "宾果进度";
+"collect_stamps_complete_bingo" = "收集邮票完成宾果！";
+"bingo_card" = "宾果卡";
+"collection_stats" = "收集统计";
+"completion_rate" = "完成率";
+
+// QR 스캔 관련
+"qr_scan" = "QR扫描";
+"qr_scan_title" = "请扫描QR码";
+"qr_scan_subtitle" = "扫描动物园展品附近的QR码来收集邮票";
+"camera_placeholder" = "相机视图";
+"start_scanning" = "开始扫描";
+"stop_scanning" = "停止扫描";
+"qr_instructions" = "使用方法";
+"qr_instruction_1" = "找到展品附近的QR码";
+"qr_instruction_2" = "将QR码对准相机进行扫描";
+"qr_instruction_3" = "收集邮票并完成宾果";
+"qr_scan_success" = "QR码扫描完成！已添加邮票。"; 

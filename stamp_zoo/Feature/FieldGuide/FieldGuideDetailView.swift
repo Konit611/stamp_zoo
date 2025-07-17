@@ -207,7 +207,12 @@ struct FieldGuideDetailView: View {
             바다사자는 태평양 연안 지역에 주로 서식하며, 캘리포니아, 멕시코, 갈라파고스 제도, 호주, 뉴질랜드 등에서 발견됩니다. 현재는 해양 오염과 어업 활동으로 인해 일부 종이 위험에 처해 있습니다.
             """
         default:
-            return animal.detail.isEmpty ? "이 동물에 대한 자세한 정보를 수집 중입니다." : animal.detail
+            return animal.detail.isEmpty ? LocalizationHelper.shared.localizedText(
+                korean: "이 동물에 대한 자세한 정보를 수집 중입니다.",
+                english: "Detailed information about this animal is being collected.",
+                japanese: "この動物の詳細情報を収集中です。",
+                chinese: "正在收集这个动物的详细信息。"
+            ) : animal.detail
         }
     }
 }

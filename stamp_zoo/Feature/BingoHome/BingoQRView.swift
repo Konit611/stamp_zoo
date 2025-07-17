@@ -13,6 +13,7 @@ struct BingoQRView: View {
     @State private var scannedCode: String = ""
     @State private var showingAlert = false
     @State private var alertMessage = ""
+    @StateObject private var localizationHelper = LocalizationHelper.shared
     
     var body: some View {
         ZStack {
@@ -58,7 +59,12 @@ struct BingoQRView: View {
                     Button(action: {
                         startScanning()
                     }) {
-                        Text("촬영")
+                        Text(localizationHelper.localizedText(
+                            korean: "촬영",
+                            english: "Capture",
+                            japanese: "撮影",
+                            chinese: "拍摄"
+                        ))
                             .font(.system(size: 16, weight: .medium))
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
@@ -75,7 +81,12 @@ struct BingoQRView: View {
         .navigationBarHidden(true)
         .toolbar(.hidden, for: .tabBar)
         .alert(alertMessage, isPresented: $showingAlert) {
-            Button(NSLocalizedString("done", comment: "")) {
+            Button(localizationHelper.localizedText(
+                korean: "완료",
+                english: "Done",
+                japanese: "完了",
+                chinese: "完成"
+            )) {
                 showingAlert = false
             }
         }
@@ -89,7 +100,12 @@ struct BingoQRView: View {
             // 시뮬레이션: 2초 후 스캔 완료
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 isScanning = false
-                alertMessage = NSLocalizedString("qr_scan_success", comment: "")
+                alertMessage = localizationHelper.localizedText(
+                    korean: "QR 코드 스캔 완료! 스탬프가 추가되었습니다.",
+                    english: "QR code scan completed! Stamp has been added.",
+                    japanese: "QRコードスキャン完了！スタンプが追加されました。",
+                    chinese: "QR码扫描完成！已添加邮票。"
+                )
                 showingAlert = true
             }
         }

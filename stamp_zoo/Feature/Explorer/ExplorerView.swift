@@ -12,11 +12,38 @@ struct ExplorerView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var viewModel = ExplorerViewModel()
     @State private var selectedCategory: Category = .all
+    @StateObject private var localizationHelper = LocalizationHelper.shared
     
     enum Category: String, CaseIterable {
         case all = "전체"
         case zoo = "동물원"
         case aquarium = "수족관"
+        
+        var localizedTitle: String {
+            switch self {
+            case .all:
+                return LocalizationHelper.shared.localizedText(
+                    korean: "전체",
+                    english: "All",
+                    japanese: "全体",
+                    chinese: "全部"
+                )
+            case .zoo:
+                return LocalizationHelper.shared.localizedText(
+                    korean: "동물원",
+                    english: "Zoo",
+                    japanese: "動物園",
+                    chinese: "动物园"
+                )
+            case .aquarium:
+                return LocalizationHelper.shared.localizedText(
+                    korean: "수족관",
+                    english: "Aquarium",
+                    japanese: "水族館",
+                    chinese: "水族馆"
+                )
+            }
+        }
     }
     
     var body: some View {
@@ -24,10 +51,20 @@ struct ExplorerView: View {
             VStack(spacing: 0) {
                 // 제목
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("참가하고 있는")
+                    Text(localizationHelper.localizedText(
+                        korean: "참가하고 있는",
+                        english: "Participating",
+                        japanese: "参加している",
+                        chinese: "参与的"
+                    ))
                         .font(.title2)
                         .fontWeight(.medium)
-                    Text("동물원・수족관")
+                    Text(localizationHelper.localizedText(
+                        korean: "동물원・수족관",
+                        english: "Zoos・Aquariums",
+                        japanese: "動物園・水族館",
+                        chinese: "动物园・水族馆"
+                    ))
                         .font(.title2)
                         .fontWeight(.medium)
                 }
@@ -41,7 +78,7 @@ struct ExplorerView: View {
                         Button(action: {
                             selectedCategory = category
                         }) {
-                            Text(category.rawValue)
+                            Text(category.localizedTitle)
                                 .font(.system(size: 12, weight: .medium))
                                 .foregroundColor(selectedCategory == category ? .white : .primary)
                                 .padding(.horizontal, 16)

@@ -12,6 +12,7 @@ struct BingoHomeView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var viewModel = BingoHomeViewModel()
     @State private var presentedDestination: NavigationDestination?
+    @StateObject private var localizationHelper = LocalizationHelper.shared
     
     enum NavigationDestination {
         case settings
@@ -90,7 +91,12 @@ struct BingoHomeView: View {
     private func titleView() -> some View {
         HStack {
             VStack(alignment: .leading, spacing: 5) {
-                Text(NSLocalizedString("stamp_rally_title", comment: ""))
+                Text(localizationHelper.localizedText(
+                    korean: "와쿠와쿠\n스탬프 랠리",
+                    english: "Exciting\nStamp Rally",
+                    japanese: "ワクワク\nスタンプラリー",
+                    chinese: "激动人心的\n邮票拉力赛"
+                ))
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(.primary)
@@ -156,7 +162,12 @@ struct BingoHomeView: View {
     // MARK: - QR Button
     private func qrButton() -> some View {
         NavigationLink(value: NavigationDestination.bingoQR) {
-            Text(NSLocalizedString("get_stamp_with_qr", comment: ""))
+            Text(localizationHelper.localizedText(
+                korean: "QR로 스탬프 취득",
+                english: "Get Stamp with QR",
+                japanese: "QRでスタンプを取得",
+                chinese: "用QR获取邮票"
+            ))
                 .font(.headline)
                 .fontWeight(.semibold)
                 .foregroundColor(.black)

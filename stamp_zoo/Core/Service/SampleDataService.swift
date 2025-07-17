@@ -33,9 +33,9 @@ class SampleDataService {
         // Facility 먼저 저장 (중복 방지)
         var savedFacilities: Set<String> = []
         for animal in sampleAnimals {
-            if !savedFacilities.contains(animal.facility.name) {
+            if !savedFacilities.contains(animal.facility.nameKo) {
                 context.insert(animal.facility)
-                savedFacilities.insert(animal.facility.name)
+                savedFacilities.insert(animal.facility.nameKo)
             }
         }
         
@@ -49,31 +49,46 @@ class SampleDataService {
     
     /// 샘플 동물 데이터 생성
     private static func createSampleAnimals() -> [Animal] {
-        // 다양한 시설 생성
-        let wakuwakuZoo = Facility(
-            name: "쿠시로 동물원",
+        // 다양한 시설 생성 (다국어 지원)
+        let kushiroZoo = Facility(
+            nameKo: "쿠시로시 동물원",
+            nameEn: "Kushiro City Zoo",
+            nameJa: "釧路市動物園",
+            nameZh: "钏路市动物园",
             type: .zoo,
-            location: "홋카이도, 쿠시로시",
+            locationKo: "홋카이도, 쿠시로시",
+            locationEn: "Hokkaido, Kushiro City",
+            locationJa: "北海道、釧路市",
+            locationZh: "北海道，钏路市",
             image: "kushiro_facility",
             logoImage: "kushiro_logo",
             mapImage: "kushiro_map",
             mapLink: "https://maps.app.goo.gl/rAE5aqtkyhHjVRZ38",
-            detail: "다양한 동물들과 함께하는 즐거운 동물원입니다."
+            detailKo: "홋카이도의 자연과 함께하는 아름다운 동물원입니다. 에조시카를 비롯한 다양한 동물들을 만날 수 있습니다.",
+            detailEn: "A beautiful zoo with the nature of Hokkaido. You can meet various animals including Ezo deer.",
+            detailJa: "北海道の自然と共にある美しい動物園です。エゾシカをはじめとする様々な動物に出会えます。",
+            detailZh: "与北海道大自然共存的美丽动物园。可以见到虾夷鹿等各种动物。"
         )
         
         // 빙고 동물들 (bingoNumber 1-9) - 다양한 시설에 분산
         let bingoAnimals: [Animal] = [
             Animal(
-                name: "에조시카",
-                detail: "에조시카에 대한 설명이 있지롱",
+                nameKo: "에조시카",
+                nameEn: "Ezo Deer",
+                nameJa: "エゾシカ",
+                nameZh: "虾夷鹿",
+                detailKo: "홋카이도에 서식하는 일본 고유의 사슴으로, 아름다운 뿔이 특징입니다.",
+                detailEn: "A native Japanese deer that lives in Hokkaido, characterized by beautiful antlers.",
+                detailJa: "北海道に生息する日本固有の鹿で、美しい角が特徴です。",
+                detailZh: "栖息在北海道的日本特有鹿类，以美丽的鹿角为特征。",
                 image: "ezoshika",
                 stampImage: "ezoshika_stamp",
                 bingoNumber: 1,
-                facility: wakuwakuZoo
+                facility: kushiroZoo
             ),
         ]
         
-        // 일반 동물들 (빙고에 포함되지 않음) - 다양한 시설에 분산
+        // 일반 동물들 (빙고에 포함되지 않음)
         let regularAnimals: [Animal] = [
         ]
         

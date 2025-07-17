@@ -16,9 +16,19 @@ enum FacilityType: String, CaseIterable, Codable {
     var displayName: String {
         switch self {
         case .zoo:
-            return "동물원"
+            return LocalizationHelper.shared.localizedText(
+                korean: "동물원",
+                english: "Zoo",
+                japanese: "動物園",
+                chinese: "动物园"
+            )
         case .aquarium:
-            return "수족관"
+            return LocalizationHelper.shared.localizedText(
+                korean: "수족관",
+                english: "Aquarium",
+                japanese: "水族館",
+                chinese: "水族馆"
+            )
         }
     }
 }
@@ -26,28 +36,106 @@ enum FacilityType: String, CaseIterable, Codable {
 @Model
 final class Facility {
     @Attribute(.unique) var id: UUID
-    var name: String
+    
+    // 다국어 지원 - 시설명
+    var nameKo: String
+    var nameEn: String
+    var nameJa: String
+    var nameZh: String
+    
     var type: FacilityType
-    var location: String?
+    
+    // 다국어 지원 - 위치
+    var locationKo: String?
+    var locationEn: String?
+    var locationJa: String?
+    var locationZh: String?
+    
     var image: String
     var logoImage: String
     var mapImage: String
     var mapLink: String
-    var detail: String
+    
+    // 다국어 지원 - 상세 설명
+    var detailKo: String
+    var detailEn: String
+    var detailJa: String
+    var detailZh: String
 
     @Relationship(deleteRule: .cascade, inverse: \Animal.facility)
     var animals: [Animal]?
+    
+    // 현재 언어에 맞는 시설명 반환
+    var name: String {
+        LocalizationHelper.shared.localizedText(
+            korean: nameKo,
+            english: nameEn,
+            japanese: nameJa,
+            chinese: nameZh
+        )
+    }
+    
+    // 현재 언어에 맞는 위치 반환
+    var location: String? {
+        guard let locationKo = locationKo else { return nil }
+        
+        return LocalizationHelper.shared.localizedText(
+            korean: locationKo,
+            english: locationEn ?? locationKo,
+            japanese: locationJa ?? locationKo,
+            chinese: locationZh ?? locationKo
+        )
+    }
+    
+    // 현재 언어에 맞는 상세 설명 반환
+    var detail: String {
+        LocalizationHelper.shared.localizedText(
+            korean: detailKo,
+            english: detailEn,
+            japanese: detailJa,
+            chinese: detailZh
+        )
+    }
 
-    init(id: UUID = UUID(), name: String, type: FacilityType, location: String? = nil, image: String, logoImage: String, mapImage: String, mapLink: String, detail: String, animals: [Animal]? = nil) {
+    init(
+        id: UUID = UUID(),
+        nameKo: String,
+        nameEn: String,
+        nameJa: String,
+        nameZh: String,
+        type: FacilityType,
+        locationKo: String? = nil,
+        locationEn: String? = nil,
+        locationJa: String? = nil,
+        locationZh: String? = nil,
+        image: String,
+        logoImage: String,
+        mapImage: String,
+        mapLink: String,
+        detailKo: String,
+        detailEn: String,
+        detailJa: String,
+        detailZh: String,
+        animals: [Animal]? = nil
+    ) {
         self.id = id
-        self.name = name
+        self.nameKo = nameKo
+        self.nameEn = nameEn
+        self.nameJa = nameJa
+        self.nameZh = nameZh
         self.type = type
-        self.location = location
+        self.locationKo = locationKo
+        self.locationEn = locationEn
+        self.locationJa = locationJa
+        self.locationZh = locationZh
         self.image = image
         self.logoImage = logoImage
         self.mapImage = mapImage
         self.mapLink = mapLink
-        self.detail = detail
+        self.detailKo = detailKo
+        self.detailEn = detailEn
+        self.detailJa = detailJa
+        self.detailZh = detailZh
         self.animals = animals
     }
 }

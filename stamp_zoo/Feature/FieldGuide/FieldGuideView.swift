@@ -10,6 +10,7 @@ import SwiftData
 
 struct FieldGuideView: View {
     @Query private var animals: [Animal]
+    @StateObject private var localizationHelper = LocalizationHelper.shared
     
     // 도감 슬롯 계산 (최소 12개, 3의 배수로 맞춤)
     private var totalFieldGuideSlots: Range<Int> {
@@ -28,10 +29,20 @@ struct FieldGuideView: View {
                 VStack(alignment: .leading, spacing: 20) {
                     // 제목
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("수집한")
+                        Text(localizationHelper.localizedText(
+                            korean: "수집한",
+                            english: "Collected",
+                            japanese: "収集した",
+                            chinese: "收集的"
+                        ))
                             .font(.title)
                             .fontWeight(.bold)
-                        Text("동물도감을 보기")
+                        Text(localizationHelper.localizedText(
+                            korean: "동물도감을 보기",
+                            english: "Animal Guide",
+                            japanese: "動物図鑑を見る",
+                            chinese: "动物图鉴"
+                        ))
                             .font(.title)
                             .fontWeight(.bold)
                     }
