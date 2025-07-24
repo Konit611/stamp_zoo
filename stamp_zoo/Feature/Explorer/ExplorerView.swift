@@ -142,15 +142,19 @@ struct ZooCard: View {
     var body: some View {
         VStack(spacing: 0) {
             // 이미지 영역
-            ZStack {
-                Image(imageName)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(height: 120)
-                    .cornerRadius(12)
-            }
-            .padding(.top, 12)
-            .padding(.horizontal, 12)
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.gray.opacity(0.1))
+                .frame(height: 120)
+                .overlay(
+                    Image(imageName)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(height: 120)
+                        .clipped()
+                )
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .padding(.top, 12)
+                .padding(.horizontal, 12)
             
             // 정보 영역
             VStack(alignment: .leading, spacing: 4) {
