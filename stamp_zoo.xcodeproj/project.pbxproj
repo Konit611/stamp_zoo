@@ -34,9 +34,22 @@
 		C6DB0A7F2E18979D0018CF9A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		C6DC70262E5C6134003FF74C /* Exceptions for "stamp_zoo" folder in "stamp_zoo" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"stamp-zoo-Info.plist",
+			);
+			target = C6DB0A4E2E1897860018CF9A /* stamp_zoo */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C6DB0A512E1897860018CF9A /* stamp_zoo */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C6DC70262E5C6134003FF74C /* Exceptions for "stamp_zoo" folder in "stamp_zoo" target */,
+			);
 			path = stamp_zoo;
 			sourceTree = "<group>";
 		};
@@ -406,6 +419,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "stamp-zoo-Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "QRコードをスキャンしてスタンプを集めるため、カメラへのアクセスが必要です。";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -445,6 +460,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "stamp-zoo-Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "QRコードをスキャンしてスタンプを集めるため、カメラへのアクセスが必要です。";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

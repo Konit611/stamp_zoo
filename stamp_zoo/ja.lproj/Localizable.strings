@@ -76,4 +76,17 @@
 "qr_instruction_1" = "展示物近くのQRコードを見つけてください";
 "qr_instruction_2" = "QRコードをカメラに合わせてスキャンしてください";
 "qr_instruction_3" = "スタンプを集めてビンゴを完成させましょう";
-"qr_scan_success" = "QRコードスキャン完了！スタンプが追加されました。"; 
+"qr_scan_success" = "QRコードスキャン完了！スタンプが追加されました。";
+
+// QRスキャン新機能関連
+"camera_permission_required" = "カメラの許可が必要です";
+"location_permission_required" = "位置情報の許可が必要です";
+"qr_scan_guide" = "QRコードを画面中央に合わせてください";
+"stamp_collected_success" = "%@のスタンプを獲得しました！";
+"invalid_qr_code" = "無効なQRコードです";
+"location_out_of_range" = "%@施設の近くでのみスキャン可能です";
+"already_collected" = "すでに収集されたスタンプです";
+"test_stamp_collected" = "[テスト] %@のスタンプを獲得しました！";
+"animal_not_found" = "該当する動物が見つかりません";
+"scanning_in_progress" = "スキャン中...";
+"tap_to_focus" = "タップしてフォーカス"; 

@@ -13,19 +13,19 @@ import Foundation
 struct BingoStamp {
     let animal: Animal?
     let position: Int
-    var isCollected: Bool {
-        return animal != nil
-    }
+    let isCollected: Bool
 }
 
 @Observable
 class BingoHomeViewModel {
     private var modelContext: ModelContext?
     private var allAnimals: [Animal] = []
+    private var collectedStamps: [StampCollection] = []
     
     init(modelContext: ModelContext? = nil) {
         self.modelContext = modelContext
         loadAnimals()
+        loadCollectedStamps()
     }
     
     // MARK: - Computed Properties
@@ -38,7 +38,8 @@ class BingoHomeViewModel {
         for position in 0..<9 {
             let bingoNumber = position + 1 // bingoNumber는 1-9
             let animal = bingoAnimals.first { $0.bingoNumber == bingoNumber }
-            stamps.append(BingoStamp(animal: animal, position: position))
+            let isCollected = collectedStamps.contains { $0.bingoNumber == bingoNumber }
+            stamps.append(BingoStamp(animal: animal, position: position, isCollected: isCollected))
         }
         
         return stamps
@@ -76,6 +77,7 @@ class BingoHomeViewModel {
     func updateModelContext(_ newContext: ModelContext) {
         self.modelContext = newContext
         loadAnimals()
+        loadCollectedStamps()
     }
     
     /// 동물 데이터 로드
@@ -94,6 +96,7 @@ class BingoHomeViewModel {
     /// 데이터 새로고침
     func refresh() {
         loadAnimals()
+        loadCollectedStamps()
     }
     
     /// 특정 위치의 스탬프 정보 가져오기
@@ -102,11 +105,60 @@ class BingoHomeViewModel {
         return bingoStamps[position]
     }
     
-    /// 동물 수집 상태 토글 (테스트용)
-    func toggleAnimalCollection(at position: Int) {
-        // 실제 구현에서는 QR 스캔을 통해 동물을 수집하게 됩니다
-        // 여기서는 테스트를 위한 기능만 제공
-        loadAnimals()
+    /// 수집된 스탬프 데이터 로드
+    private func loadCollectedStamps() {
+        guard let modelContext = modelContext else { return }
+        
+        do {
+            let descriptor = FetchDescriptor<StampCollection>()
+            collectedStamps = try modelContext.fetch(descriptor)
+        } catch {
+            print("Failed to load collected stamps: \(error)")
+            collectedStamps = []
+        }
+    }
+    
+    /// QR 스캔을 통한 스탬프 수집
+    func collectStamp(bingoNumber: Int, qrCode: String, facilityName: String, isTestCollection: Bool = false) {
+        guard let modelContext = modelContext else { return }
+        
+        // 이미 수집된 스탬프인지 확인
+        let alreadyCollected = collectedStamps.contains { $0.bingoNumber == bingoNumber }
+        if alreadyCollected {
+            return
+        }
+        
+        // 새로운 스탬프 수집 기록 생성
+        let newCollection = StampCollection(
+            bingoNumber: bingoNumber,
+            qrCode: qrCode,
+            facilityName: facilityName,
+            isTestCollection: isTestCollection
+        )
+        
+        modelContext.insert(newCollection)
+        
+        do {
+            try modelContext.save()
+            loadCollectedStamps() // 새로고침
+        } catch {
+            print("Failed to save stamp collection: \(error)")
+        }
+    }
+    
+    /// 특정 빙고 번호의 스탬프가 수집되었는지 확인
+    func isStampCollected(bingoNumber: Int) -> Bool {
+        return collectedStamps.contains { $0.bingoNumber == bingoNumber }
+    }
+    
+    /// 수집된 스탬프 정보 가져오기
+    func getCollectedStamp(bingoNumber: Int) -> StampCollection? {
+        return collectedStamps.first { $0.bingoNumber == bingoNumber }
+    }
+    
+    /// 모든 수집된 스탬프 가져오기 (최신순)
+    var allCollectedStamps: [StampCollection] {
+        return collectedStamps.sorted { $0.collectedAt > $1.collectedAt }
     }
 }
 

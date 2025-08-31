@@ -202,7 +202,11 @@ struct AnimalDetailCard: View {
                 detailKo: "다양한 동물들과 함께하는 즐거운 동물원입니다.",
                 detailEn: "A zoo with various animals.",
                 detailJa: "様々な動物と一緒に楽しい動物園です。",
-                detailZh: "与各种动物一起的快乐动物园。"
+                detailZh: "与各种动物一起的快乐动物园。",
+                latitude: 42.9849,
+                longitude: 144.3822,
+                validationRadius: 500.0,
+                facilityId: "kushiro_preview"
             )
         )
     }

@@ -76,4 +76,17 @@
 "qr_instruction_1" = "Find QR codes near the exhibits";
 "qr_instruction_2" = "Align QR code with camera and scan";
 "qr_instruction_3" = "Collect stamps and complete bingo";
-"qr_scan_success" = "QR code scan completed! Stamp has been added."; 
+"qr_scan_success" = "QR code scan completed! Stamp has been added.";
+
+// QR Scan New Features
+"camera_permission_required" = "Camera permission required";
+"location_permission_required" = "Location permission required";
+"qr_scan_guide" = "Align QR code to center of screen";
+"stamp_collected_success" = "Got %@ stamp!";
+"invalid_qr_code" = "Invalid QR code";
+"location_out_of_range" = "Can only scan near %@ facility";
+"already_collected" = "Stamp already collected";
+"test_stamp_collected" = "[Test] Got %@ stamp!";
+"animal_not_found" = "Animal not found";
+"scanning_in_progress" = "Scanning...";
+"tap_to_focus" = "Tap to focus"; 

@@ -49,7 +49,7 @@ class SampleDataService {
     
     /// 샘플 동물 데이터 생성
     private static func createSampleAnimals() -> [Animal] {
-        // 다양한 시설 생성 (다국어 지원)
+        // 다양한 시설 생성 (다국어 지원 + GPS 좌표)
         let kushiroZoo = Facility(
             nameKo: "쿠시로시 동물원",
             nameEn: "Kushiro City Zoo",
@@ -67,7 +67,11 @@ class SampleDataService {
             detailKo: "홋카이도의 자연과 함께하는 아름다운 동물원입니다. 에조시카를 비롯한 다양한 동물들을 만날 수 있습니다.",
             detailEn: "A beautiful zoo with the nature of Hokkaido. You can meet various animals including Ezo deer.",
             detailJa: "北海道の自然と共にある美しい動物園です。エゾシカをはじめとする様々な動物に出会えます。",
-            detailZh: "与北海道大自然共存的美丽动物园。可以见到虾夷鹿等各种动物。"
+            detailZh: "与北海道大自然共存的美丽动物园。可以见到虾夷鹿等各种动物。",
+            latitude: 42.9849,
+            longitude: 144.3822,
+            validationRadius: 500.0,
+            facilityId: "kushiro"
         )
         
         // 삿포로시 마루야마 동물원
@@ -88,7 +92,11 @@ class SampleDataService {
             detailKo: "삿포로 시내에 위치한 역사 깊은 동물원으로, 북극곰과 다양한 동물들을 만날 수 있습니다.",
             detailEn: "A historic zoo located in Sapporo city where you can meet polar bears and various animals.",
             detailJa: "札幌市内にある歴史ある動物園で、ホッキョクグマをはじめ様々な動物に出会えます。",
-            detailZh: "位于札幌市内的历史悠久动物园，可以见到北极熊等各种动物。"
+            detailZh: "位于札幌市内的历史悠久动物园，可以见到北极熊等各种动物。",
+            latitude: 43.0519,
+            longitude: 141.3152,
+            validationRadius: 300.0,
+            facilityId: "maruyama"
         )
         
         // 아사히카와시 아사히야마 동물원
@@ -109,7 +117,11 @@ class SampleDataService {
             detailKo: "동물들의 자연스러운 행동을 관찰할 수 있는 혁신적인 전시 방식으로 유명한 동물원입니다.",
             detailEn: "A zoo famous for its innovative exhibition methods that allow visitors to observe animals' natural behaviors.",
             detailJa: "動物たちの自然な行動を観察できる革新的な展示方式で有名な動物園です。",
-            detailZh: "以能够观察动物自然行为的创新展示方式而闻名的动物园。"
+            detailZh: "以能够观察动物自然行为的创新展示方式而闻名的动物园。",
+            latitude: 43.7711,
+            longitude: 142.4553,
+            validationRadius: 400.0,
+            facilityId: "asahiyama"
         )
         
         // // 오비히로 동물원
@@ -151,7 +163,11 @@ class SampleDataService {
              detailKo: "바다를 바라보며 즐길 수 있는 아름다운 수족관으로, 점박이바다표범을 만날 수 있습니다.",
              detailEn: "A beautiful aquarium with ocean views where you can meet spotted seals.",
              detailJa: "海を眺めながら楽しめる美しい水族館で、ゴマフアザラシに出会えます。",
-             detailZh: "可以眺望大海享受美景的美丽水族馆，可以遇见斑海豹。"
+             detailZh: "可以眺望大海享受美景的美丽水族馆，可以遇见斑海豹。",
+             latitude: 43.1907,
+             longitude: 140.9947,
+             validationRadius: 200.0,
+             facilityId: "otaru"
          )
         
         // // 신삿포로산피아자수족관

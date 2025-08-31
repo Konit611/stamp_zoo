@@ -15,7 +15,8 @@ struct stamp_zooApp: App {
         let schema = Schema([
             Item.self,
             Animal.self,
-            Facility.self
+            Facility.self,
+            StampCollection.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 

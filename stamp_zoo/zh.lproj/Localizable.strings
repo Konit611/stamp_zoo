@@ -76,4 +76,17 @@
 "qr_instruction_1" = "找到展品附近的QR码";
 "qr_instruction_2" = "将QR码对准相机进行扫描";
 "qr_instruction_3" = "收集邮票并完成宾果";
-"qr_scan_success" = "QR码扫描完成！已添加邮票。"; 
+"qr_scan_success" = "QR码扫描完成！已添加邮票。";
+
+// QR扫描新功能相关
+"camera_permission_required" = "需要相机权限";
+"location_permission_required" = "需要位置权限";
+"qr_scan_guide" = "将QR码对准屏幕中央";
+"stamp_collected_success" = "获得了%@邮票！";
+"invalid_qr_code" = "无效的QR码";
+"location_out_of_range" = "只能在%@设施附近扫描";
+"already_collected" = "邮票已收集";
+"test_stamp_collected" = "[测试] 获得了%@邮票！";
+"animal_not_found" = "找不到该动物";
+"scanning_in_progress" = "扫描中...";
+"tap_to_focus" = "点击对焦"; 

@@ -65,6 +65,12 @@ final class Facility {
     @Relationship(deleteRule: .cascade, inverse: \Animal.facility)
     var animals: [Animal]?
     
+    // GPS 위치 정보
+    var latitude: Double
+    var longitude: Double
+    var validationRadius: Double  // 유효 범위 (미터)
+    var facilityId: String        // 시설 고유 ID
+    
     // 현재 언어에 맞는 시설명 반환
     var name: String {
         LocalizationHelper.shared.localizedText(
@@ -116,6 +122,10 @@ final class Facility {
         detailEn: String,
         detailJa: String,
         detailZh: String,
+        latitude: Double = 0.0,
+        longitude: Double = 0.0,
+        validationRadius: Double = 500.0,
+        facilityId: String,
         animals: [Animal]? = nil
     ) {
         self.id = id
@@ -136,6 +146,10 @@ final class Facility {
         self.detailEn = detailEn
         self.detailJa = detailJa
         self.detailZh = detailZh
+        self.latitude = latitude
+        self.longitude = longitude
+        self.validationRadius = validationRadius
+        self.facilityId = facilityId
         self.animals = animals
     }
 }
