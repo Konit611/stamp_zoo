@@ -16,16 +16,18 @@ struct stamp_zooApp: App {
             Item.self,
             Animal.self,
             Facility.self,
-            StampCollection.self
+            StampCollection.self,
+            BingoCard.self,
+            BingoAnimal.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
         do {
             let container = try ModelContainer(for: schema, configurations: [modelConfiguration])
             
-            // 샘플 데이터 로드 체크
+            // JSON 데이터 로드 체크
             Task {
-                await loadSampleDataIfNeeded(container: container)
+                await JSONDataService.loadDataIfNeeded(in: container)
             }
             
             return container
@@ -41,8 +43,5 @@ struct stamp_zooApp: App {
         .modelContainer(sharedModelContainer)
     }
     
-    // MARK: - Sample Data Loading
-    private static func loadSampleDataIfNeeded(container: ModelContainer) async {
-        await SampleDataService.loadSampleDataIfNeeded(in: container)
-    }
+
 }

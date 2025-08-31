@@ -105,6 +105,8 @@ class QRValidationService {
         // 1. QR 코드 형식 검증
         if code.hasPrefix("stamp_zoo://test/animal/") {
             return validateTestQRCode(code)
+        } else if code.hasPrefix("stamp_zoo://animal/") {
+            return validateAnimalQRCode(code)
         } else if code.hasPrefix("stamp_zoo://facility/") {
             return validateFacilityQRCode(code)
         } else {
@@ -112,17 +114,41 @@ class QRValidationService {
         }
     }
     
-    /// 테스트용 QR 코드 검증 (위치 제한 없음)
-    private func validateTestQRCode(_ code: String) -> QRValidationResult {
-        guard let bingoNumber = extractBingoNumber(from: code) else {
+    /// 동물 UUID로 QR 코드 검증 (위치 제한 없음)
+    private func validateAnimalQRCode(_ code: String) -> QRValidationResult {
+        guard let animalUUID = extractAnimalUUID(from: code) else {
             return .invalidCode
         }
         
-        guard let animal = findAnimal(by: bingoNumber) else {
+        guard let animal = findAnimal(by: animalUUID) else {
             return .animalNotFound
         }
         
-        if isAlreadyCollected(bingoNumber: bingoNumber) {
+        if isAnimalAlreadyCollected(animalId: animalUUID.uuidString) {
+            return .alreadyCollected(animal: animal)
+        }
+        
+        return .success(animal: animal, facility: animal.facility)
+    }
+    
+    /// 테스트용 QR 코드 검증 (위치 제한 없음) - UUID 기반
+    private func validateTestQRCode(_ code: String) -> QRValidationResult {
+        // stamp_zoo://test/animal/{uuid} 형식에서 UUID 추출
+        let testPrefix = "stamp_zoo://test/animal/"
+        guard code.hasPrefix(testPrefix) else {
+            return .invalidCode
+        }
+        
+        let uuidString = String(code.dropFirst(testPrefix.count))
+        guard let animalUUID = UUID(uuidString: uuidString) else {
+            return .invalidCode
+        }
+        
+        guard let animal = findAnimal(by: animalUUID) else {
+            return .animalNotFound
+        }
+        
+        if isAnimalAlreadyCollected(animalId: animalUUID.uuidString) {
             return .alreadyCollected(animal: animal)
         }
         
@@ -176,26 +202,41 @@ class QRValidationService {
     func collectStamp(result: QRValidationResult, qrCode: String) -> Bool {
         guard result.isSuccess else { return false }
         
-        let bingoNumber: Int
+        let animal: Animal
         let facilityName: String
         let isTestCollection: Bool
         
         switch result {
-        case .success(let animal, let facility):
-            bingoNumber = animal.bingoNumber ?? 0
+        case .success(let resultAnimal, let facility):
+            animal = resultAnimal
             facilityName = facility.name
             isTestCollection = false
-        case .testSuccess(let animal):
-            bingoNumber = animal.bingoNumber ?? 0
+        case .testSuccess(let resultAnimal):
+            animal = resultAnimal
             facilityName = "Test"
             isTestCollection = true
         default:
             return false
         }
         
+        // 다음 빙고 번호 결정 (1-9)
+        let nextBingoNumber = getNextBingoNumber()
+        guard nextBingoNumber <= 9 else {
+            print("빙고가 이미 완성되었습니다.")
+            return false
+        }
+        
+        // BingoAnimal 동적 생성
+        let bingoAnimal = BingoAnimal(
+            bingoNumber: nextBingoNumber,
+            animalId: animal.id.uuidString,
+            qrCode: qrCode
+        )
+        modelContext.insert(bingoAnimal)
+        
         let userLocation = locationService.currentLocation
         let stampCollection = StampCollection(
-            bingoNumber: bingoNumber,
+            bingoNumber: nextBingoNumber,
             qrCode: qrCode,
             facilityName: facilityName,
             userLatitude: userLocation?.coordinate.latitude,
@@ -216,6 +257,12 @@ class QRValidationService {
     
     // MARK: - Helper Methods
     
+    /// QR 코드에서 Animal UUID 추출 (stamp_zoo://animal/{uuid})
+    private func extractAnimalUUID(from code: String) -> UUID? {
+        guard let lastComponent = code.split(separator: "/").last else { return nil }
+        return UUID(uuidString: String(lastComponent))
+    }
+    
     /// QR 코드에서 빙고 번호 추출
     private func extractBingoNumber(from code: String) -> Int? {
         guard let lastComponent = code.split(separator: "/").last else { return nil }
@@ -224,12 +271,39 @@ class QRValidationService {
     
     /// 빙고 번호로 동물 찾기
     private func findAnimal(by bingoNumber: Int) -> Animal? {
+        // 먼저 BingoAnimal에서 animalId 찾기
+        let bingoDescriptor = FetchDescriptor<BingoAnimal>(
+            predicate: #Predicate { $0.bingoNumber == bingoNumber }
+        )
+        
+        guard let bingoAnimal = try? modelContext.fetch(bingoDescriptor).first,
+              let animalUUID = UUID(uuidString: bingoAnimal.animalId) else {
+            return nil
+        }
+        
+        // Animal ID로 실제 동물 찾기
+        let animalDescriptor = FetchDescriptor<Animal>(
+            predicate: #Predicate { $0.id == animalUUID }
+        )
+        
+        return try? modelContext.fetch(animalDescriptor).first
+    }
+    
+    /// UUID로 동물 찾기
+    private func findAnimal(by uuid: UUID) -> Animal? {
         let descriptor = FetchDescriptor<Animal>(
-            predicate: #Predicate<Animal> { animal in
-                animal.bingoNumber == bingoNumber
-            }
+            predicate: #Predicate { $0.id == uuid }
         )
         return try? modelContext.fetch(descriptor).first
+    }
+    
+    /// Animal이 이미 수집되었는지 확인 (BingoAnimal 테이블에서)
+    private func isAnimalAlreadyCollected(animalId: String) -> Bool {
+        let descriptor = FetchDescriptor<BingoAnimal>(
+            predicate: #Predicate { $0.animalId == animalId }
+        )
+        let existing = try? modelContext.fetch(descriptor)
+        return !(existing?.isEmpty ?? true)
     }
     
     /// 시설 ID로 시설 찾기
@@ -264,5 +338,37 @@ class QRValidationService {
     /// 특정 빙고 번호가 수집되었는지 확인
     func isStampCollected(bingoNumber: Int) -> Bool {
         return isAlreadyCollected(bingoNumber: bingoNumber)
+    }
+    
+    /// Animal에 대응하는 빙고 번호 찾기
+    private func getBingoNumber(for animal: Animal) -> Int? {
+        let animalIdString = animal.id.uuidString
+        let descriptor = FetchDescriptor<BingoAnimal>(
+            predicate: #Predicate { $0.animalId == animalIdString }
+        )
+        
+        guard let bingoAnimal = try? modelContext.fetch(descriptor).first else {
+            return nil
+        }
+        
+        return bingoAnimal.bingoNumber
+    }
+    
+    /// 1-9 중에서 사용되지 않은 랜덤 빙고 번호 가져오기
+    private func getNextBingoNumber() -> Int {
+        // 현재 사용 중인 빙고 번호들 조회
+        let descriptor = FetchDescriptor<BingoAnimal>()
+        let existingBingoAnimals = (try? modelContext.fetch(descriptor)) ?? []
+        let usedNumbers = Set(existingBingoAnimals.map { $0.bingoNumber })
+        
+        // 1-9 중에서 사용되지 않은 번호들
+        let availableNumbers = Array(1...9).filter { !usedNumbers.contains($0) }
+        
+        guard !availableNumbers.isEmpty else {
+            return 10 // 빙고 완성 (9개 초과)
+        }
+        
+        // 사용 가능한 번호 중에서 랜덤 선택
+        return availableNumbers.randomElement() ?? 10
     }
 }

@@ -32,11 +32,15 @@ struct FacilityCard {
 class ExplorerViewModel {
     private var modelContext: ModelContext?
     private var allFacilities: [Facility] = []
+    private var bingoAnimals: [BingoAnimal] = []
+    private var stampCollections: [StampCollection] = []
     private var localizationHelper = LocalizationHelper.shared
     
     init(modelContext: ModelContext? = nil) {
         self.modelContext = modelContext
         loadFacilities()
+        loadBingoAnimals()
+        loadStampCollections()
     }
     
     // MARK: - Computed Properties
@@ -87,13 +91,52 @@ class ExplorerViewModel {
     /// 데이터 새로고침
     func refresh() {
         loadFacilities()
+        loadBingoAnimals()
+        loadStampCollections()
+    }
+    
+    /// 빙고 동물 데이터 로드
+    private func loadBingoAnimals() {
+        guard let modelContext = modelContext else { return }
+        
+        do {
+            let descriptor = FetchDescriptor<BingoAnimal>()
+            bingoAnimals = try modelContext.fetch(descriptor)
+        } catch {
+            print("Failed to load bingo animals: \(error)")
+            bingoAnimals = []
+        }
+    }
+    
+    /// 스탬프 수집 데이터 로드
+    private func loadStampCollections() {
+        guard let modelContext = modelContext else { return }
+        
+        do {
+            let descriptor = FetchDescriptor<StampCollection>()
+            stampCollections = try modelContext.fetch(descriptor)
+        } catch {
+            print("Failed to load stamp collections: \(error)")
+            stampCollections = []
+        }
     }
     
     /// 해당 시설에 수집된 동물이 있는지 확인
     private func hasAnyCollectedAnimal(in facility: Facility) -> Bool {
         guard let animals = facility.animals else { return false }
-        // bingoNumber가 있는 동물이 있으면 수집된 것으로 간주
-        return animals.contains { $0.bingoNumber != nil }
+        
+        // 수집된 빙고 번호들 가져오기
+        let collectedBingoNumbers = Set(stampCollections.map { $0.bingoNumber })
+        
+        // 이 시설의 동물 중에 수집된 것이 있는지 확인
+        return animals.contains { animal in
+            // 이 동물이 빙고에 포함된 동물인지 확인
+            let bingoAnimal = bingoAnimals.first { $0.animalId == animal.id.uuidString }
+            if let bingoNumber = bingoAnimal?.bingoNumber {
+                return collectedBingoNumbers.contains(bingoNumber)
+            }
+            return false
+        }
     }
     
     /// 시설의 위치 정보 가져오기

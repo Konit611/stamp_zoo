@@ -27,7 +27,6 @@ final class Animal {
     
     var image: String
     var stampImage: String
-    var bingoNumber: Int?
     var facility: Facility
 
     // 현재 언어에 맞는 이름 반환
@@ -62,7 +61,6 @@ final class Animal {
         detailZh: String,
         image: String,
         stampImage: String,
-        bingoNumber: Int? = nil,
         facility: Facility
     ) {
         self.id = id
@@ -76,7 +74,6 @@ final class Animal {
         self.detailZh = detailZh
         self.image = image
         self.stampImage = stampImage
-        self.bingoNumber = bingoNumber
         self.facility = facility
     }
 }

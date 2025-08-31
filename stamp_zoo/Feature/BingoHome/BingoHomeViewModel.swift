@@ -20,11 +20,13 @@ struct BingoStamp {
 class BingoHomeViewModel {
     private var modelContext: ModelContext?
     private var allAnimals: [Animal] = []
+    private var allBingoAnimals: [BingoAnimal] = []
     private var collectedStamps: [StampCollection] = []
     
     init(modelContext: ModelContext? = nil) {
         self.modelContext = modelContext
         loadAnimals()
+        loadBingoAnimals()
         loadCollectedStamps()
     }
     
@@ -37,7 +39,7 @@ class BingoHomeViewModel {
         // 0-8까지 9개의 빙고 위치 생성
         for position in 0..<9 {
             let bingoNumber = position + 1 // bingoNumber는 1-9
-            let animal = bingoAnimals.first { $0.bingoNumber == bingoNumber }
+            let animal = getAnimal(for: bingoNumber)
             let isCollected = collectedStamps.contains { $0.bingoNumber == bingoNumber }
             stamps.append(BingoStamp(animal: animal, position: position, isCollected: isCollected))
         }
@@ -45,9 +47,11 @@ class BingoHomeViewModel {
         return stamps
     }
     
-    /// bingoNumber가 nil이 아닌 동물들
+    /// 빙고에 포함된 동물들
     var bingoAnimals: [Animal] {
-        return allAnimals.filter { $0.bingoNumber != nil }
+        return allBingoAnimals.compactMap { bingoAnimal in
+            getAnimal(by: bingoAnimal.animalId)
+        }
     }
     
     /// 수집된 스탬프 개수
@@ -77,6 +81,7 @@ class BingoHomeViewModel {
     func updateModelContext(_ newContext: ModelContext) {
         self.modelContext = newContext
         loadAnimals()
+        loadBingoAnimals()
         loadCollectedStamps()
     }
     
@@ -93,9 +98,23 @@ class BingoHomeViewModel {
         }
     }
     
+    /// 빙고 동물 데이터 로드
+    private func loadBingoAnimals() {
+        guard let modelContext = modelContext else { return }
+        
+        do {
+            let descriptor = FetchDescriptor<BingoAnimal>()
+            allBingoAnimals = try modelContext.fetch(descriptor)
+        } catch {
+            print("Failed to load bingo animals: \(error)")
+            allBingoAnimals = []
+        }
+    }
+    
     /// 데이터 새로고침
     func refresh() {
         loadAnimals()
+        loadBingoAnimals()
         loadCollectedStamps()
     }
     
@@ -159,6 +178,19 @@ class BingoHomeViewModel {
     /// 모든 수집된 스탬프 가져오기 (최신순)
     var allCollectedStamps: [StampCollection] {
         return collectedStamps.sorted { $0.collectedAt > $1.collectedAt }
+    }
+    
+    /// 빙고 번호로 동물 찾기
+    private func getAnimal(for bingoNumber: Int) -> Animal? {
+        guard let bingoAnimal = allBingoAnimals.first(where: { $0.bingoNumber == bingoNumber }) else {
+            return nil
+        }
+        return getAnimal(by: bingoAnimal.animalId)
+    }
+    
+    /// 동물 ID로 동물 찾기
+    private func getAnimal(by animalId: String) -> Animal? {
+        return allAnimals.first { $0.id.uuidString == animalId }
     }
 }
 

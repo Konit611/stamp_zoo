@@ -10,13 +10,24 @@ import SwiftData
 
 struct FieldGuideView: View {
     @Query private var animals: [Animal]
+    @Query private var bingoAnimals: [BingoAnimal]
     @StateObject private var localizationHelper = LocalizationHelper.shared
+    @Environment(\.modelContext) private var modelContext
     
-    // 도감 슬롯 계산 (최소 12개, 3의 배수로 맞춤)
+    // 수집된 동물들 (BingoAnimal 기반 - 영구 수집 기록)
+    private var collectedAnimals: [Animal] {
+        let collectedAnimalIds = Set(bingoAnimals.map { $0.animalId })
+        
+        return animals.filter { animal in
+            collectedAnimalIds.contains(animal.id.uuidString)
+        }
+    }
+    
+    // 도감 슬롯 계산 (수집된 동물 + 여유분, 3의 배수로 맞춤)
     private var totalFieldGuideSlots: Range<Int> {
-        let animalCount = animals.count
+        let collectedCount = collectedAnimals.count
         let minSlots = 12
-        let slotsNeeded = max(animalCount + 6, minSlots) // 현재 동물 + 여유분 또는 최소 개수
+        let slotsNeeded = max(collectedCount + 6, minSlots) // 수집된 동물 + 여유분 또는 최소 개수
         let roundedSlots = ((slotsNeeded + 2) / 3) * 3 // 3의 배수로 맞춤
         return 0..<roundedSlots
     }
@@ -125,16 +136,16 @@ struct FieldGuideView: View {
     
     // MARK: - Helper Functions
     private func getAnimal(at index: Int) -> Animal? {
-        // 처음 몇 개만 동물로 표시하고 나머지는 비어있는 상태로
-        if index < animals.count {
-            return animals[index]
+        // 수집된 동물들만 표시
+        if index < collectedAnimals.count {
+            return collectedAnimals[index]
         }
         return nil
     }
     
     private func isAnimalCollected(_ animal: Animal) -> Bool {
-        // 빙고 번호가 있으면 수집된 것으로 간주
-        return animal.bingoNumber != nil
+        // 모든 표시되는 동물은 이미 수집된 동물이므로 항상 true
+        return true
     }
 }
 

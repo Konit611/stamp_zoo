@@ -151,7 +151,7 @@ struct BingoQRView: View {
         let result = validationService.validateQRCode(code)
         
         switch result {
-        case .success(let animal, let facility):
+        case .success(_, _):
             // 성공: 실제 스탬프 수집
             if validationService.collectStamp(result: result, qrCode: code) {
                 bingoHomeViewModel?.refresh()
@@ -165,7 +165,7 @@ struct BingoQRView: View {
                 )
             }
             
-        case .testSuccess(let animal):
+        case .testSuccess(_):
             // 테스트 성공: 테스트 스탬프 수집
             if validationService.collectStamp(result: result, qrCode: code) {
                 bingoHomeViewModel?.refresh()
